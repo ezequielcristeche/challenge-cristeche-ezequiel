@@ -30,4 +30,20 @@ public class SpecialPrice {
         ValidatorUtils.validateNull(price,"el precio no puede ser nulo");
         this.price = price;
     }
+
+    public SpecialPrice(ListingId listingId, LocalDate date, BigDecimal price) {
+        this.specialPriceId = specialPriceId;
+        this.listingId = listingId;
+        ValidatorUtils.validateNull(date,"La fecha no puede ser nula");
+        this.date = date;
+        ValidatorUtils.validateNull(price,"el precio no puede ser nulo");
+        this.price = price;
+    }
+
+
+    public static SpecialPrice create(ListingId listingId,
+                                      LocalDate date, BigDecimal price){
+        return new SpecialPrice(listingId, date, price);
+    }
+
 }

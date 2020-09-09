@@ -5,7 +5,9 @@ import challenge.commons.exception.DomainDuplicatedException;
 import challenge.listing.domain.Listing;
 import challenge.listing.domain.ListingId;
 import challenge.listing.repository.ListingRepository;
+import challenge.user.domain.User;
 import challenge.user.domain.UserId;
+import challenge.user.service.consultar.GetUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Servidor de dominio que contempla el caso de crear un listado;
+ * Servidor de dominio que contempla el caso de crear un listado
  *
  * @author Ezequiel Cristeche
  * @since 6/9/2020
@@ -24,26 +26,31 @@ public class CreateListing {
 
     private static Logger logger = LoggerFactory.getLogger(CreateListing.class);
 
+    private GetUser getUser;
+
     private ListingRepository listingRepository;
 
-    public CreateListing(ListingRepository listingRepository) {
+    public CreateListing(GetUser consultarUser, ListingRepository listingRepository) {
+        this.getUser = consultarUser;
         this.listingRepository = listingRepository;
     }
+
 
     @Transactional
     public Listing createListing(ListingId listingId, UserId ownerId, String name, String slug, String description,
                                  Integer adults, Integer children, Boolean isPetsAllowed, BigDecimal basePrice,
                                  BigDecimal cleaningFee, String imageUrl, BigDecimal weeklyDiscount,
                                  BigDecimal monthlyDiscount) {
+        logger.info("Creating a listing with id {}", listingId.getId());
+        User user = getUser.getUserById(ownerId);
         verifyListingDuplicated(listingId);
-        return Listing.crear(ListingId listingId, UserId ownerId, String name, String slug, String description,
-                Integer adults, Integer children, Boolean isPetsAllowed, BigDecimal basePrice,
-                BigDecimal cleaningFee, String imageUrl, BigDecimal weeklyDiscount,
-                BigDecimal monthlyDiscount);
+        return listingRepository.save(Listing.crear(listingId, user.getUserId(), name, slug, description,
+                adults, children, isPetsAllowed, basePrice, cleaningFee, imageUrl, weeklyDiscount, monthlyDiscount));
     }
 
     /**
      * Verifica que antes de crear un listado, no exista el mismo
+     *
      * @param listingId el identificador para realizar la busqueda
      */
     private void verifyListingDuplicated(ListingId listingId) {

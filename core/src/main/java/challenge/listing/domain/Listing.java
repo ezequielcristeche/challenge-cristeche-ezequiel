@@ -55,21 +55,21 @@ public class Listing {
         ValidatorUtils.validateAttribute(description, "la descripcion no puede estar vacia",
                 60, "la descripcion supera el máximo permitido (60)");
         this.description = description;
-        ValidatorUtils.validateNull(adults,"El numero de adultos no puede ser vacio");
+        ValidatorUtils.validateNull(adults, "El numero de adultos no puede ser vacio");
         this.adults = adults;
-        ValidatorUtils.validateNull(children,"El numero de chicos no puede ser vacio");
+        ValidatorUtils.validateNull(children, "El numero de chicos no puede ser vacio");
         this.children = children;
-        ValidatorUtils.validateNull(isPetsAllowed,"indicar si se permite o no mascotas");
+        ValidatorUtils.validateNull(isPetsAllowed, "indicar si se permite o no mascotas");
         this.isPetsAllowed = isPetsAllowed;
-        ValidatorUtils.validateNull(basePrice,"Indicar un precio base");
+        ValidatorUtils.validateNull(basePrice, "Indicar un precio base");
         this.basePrice = basePrice;
-        ValidatorUtils.validateNull(cleaningFee,"Indicar la tasa de limpieza");
+        ValidatorUtils.validateNull(cleaningFee, "Indicar la tasa de limpieza");
         this.cleaningFee = cleaningFee;
-        ValidatorUtils.validateNull(imageUrl,"indicar la ruta de la imagen");
+        ValidatorUtils.validateNull(imageUrl, "indicar la ruta de la imagen");
         this.imageUrl = imageUrl;
-        ValidatorUtils.validateNull(weeklyDiscount,"indicar el descuento semanal");
+        ValidatorUtils.validateNull(weeklyDiscount, "indicar el descuento semanal");
         this.weeklyDiscount = weeklyDiscount;
-        ValidatorUtils.validateNull(monthlyDiscount,"indicar el descuento mensual");
+        ValidatorUtils.validateNull(monthlyDiscount, "indicar el descuento mensual");
         this.monthlyDiscount = monthlyDiscount;
     }
 
@@ -78,6 +78,15 @@ public class Listing {
                                 Integer adults, Integer children, Boolean isPetsAllowed, BigDecimal basePrice,
                                 BigDecimal cleaningFee, String imageUrl, BigDecimal weeklyDiscount,
                                 BigDecimal monthlyDiscount) {
+        return new Listing(listingId, ownerId, name, slug, description, adults,
+                children, isPetsAllowed, basePrice, cleaningFee,
+                imageUrl, weeklyDiscount, monthlyDiscount);
+    }
+
+    public static Listing actualizar(ListingId listingId, UserId ownerId, String name, String slug, String description,
+                                     Integer adults, Integer children, Boolean isPetsAllowed, BigDecimal basePrice,
+                                     BigDecimal cleaningFee, String imageUrl, BigDecimal weeklyDiscount,
+                                     BigDecimal monthlyDiscount) {
         return new Listing(listingId, ownerId, name, slug, description, adults,
                 children, isPetsAllowed, basePrice, cleaningFee,
                 imageUrl, weeklyDiscount, monthlyDiscount);

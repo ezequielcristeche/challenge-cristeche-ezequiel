@@ -3,6 +3,8 @@ package challenge.listing.repository;
 import challenge.listing.domain.Listing;
 import challenge.listing.domain.ListingId;
 
+import java.util.List;
+
 /** Contiene los métodos a ser implementados por la capa Infra
  * @author Ezequiel Cristeche
  * @since 6/9/2020
@@ -31,10 +33,18 @@ public interface ListingRepository {
     Listing findById(ListingId listingId);
 
     /**
+     * Trae todos los registros de {@link Listing}
+     * @return
+     */
+    List<Listing> findAll();
+
+    /**
      * borra un registro de {@link Listing}
      * @param listingId el identificador de la tabla
      */
     void deleteById(ListingId listingId);
+
+
 
 
 
