@@ -1,6 +1,6 @@
 package challenge;
 
-import com.ma.grossingup.commons.annotation.Service;
+import challenge.commons.annotation.Service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;

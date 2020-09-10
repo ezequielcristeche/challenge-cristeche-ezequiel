@@ -19,13 +19,13 @@ import java.time.LocalDate;
  * @since 7/9/2020
  */
 @Service
-public class createSpecialPrice {
+public class CreateSpecialPrice {
 
     private SpecialPriceRepository specialPriceRepository;
 
     private GetListing getListing;
 
-    public createSpecialPrice(SpecialPriceRepository specialPriceRepository, GetListing getListing) {
+    public CreateSpecialPrice(SpecialPriceRepository specialPriceRepository, GetListing getListing) {
         this.specialPriceRepository = specialPriceRepository;
         this.getListing = getListing;
     }

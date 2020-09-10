@@ -15,7 +15,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.ma</groupId>
+            <groupId>com.challenge</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
