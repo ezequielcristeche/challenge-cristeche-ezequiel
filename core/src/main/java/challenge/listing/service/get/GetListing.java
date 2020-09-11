@@ -93,14 +93,19 @@ public class GetListing {
      * @param checkout    fecha de salida
      */
     private void verifyDateReservation(LocalDate currentDate, LocalDate checkin, LocalDate checkout) {
-        if (currentDate.isBefore(checkin) || currentDate.isAfter(checkout)) {
-            logger.warn("La fecha {} no se encuentra dentro de las fechas de reserva", currentDate.toString());
-            throw new DomainInvalidRequestException(String.format("La fecha %s no se encuentra dentro de " +
-                    "las fechas de reserva", currentDate.toString()));
-        } else if (checkin.isAfter(checkout)) {
+
+        //verifico que la fecha de checkin no sea mayor a la de checkout
+        if (checkin.isAfter(checkout)) {
             logger.warn("La fecha checkin {} es mayor a la fecha checkout {}", checkin.toString(), checkout.toString());
             throw new DomainInvalidRequestException(String.format("La fecha checkin %s es mayor a la fecha " +
                     "checkout %s", checkin.toString(), checkout.toString()));
+            // dada la fecha elegida por el usuario verifica que se encuentre dentro de las fechas de checkin
+            // y checkout
+        } else if (currentDate.isBefore(checkin) || currentDate.isAfter(checkout)) {
+            logger.warn("La fecha {} no se encuentra dentro de las fechas de reserva", currentDate.toString());
+            throw new DomainInvalidRequestException(String.format("La fecha %s no se encuentra dentro de " +
+                    "las fechas de reserva", currentDate.toString()));
+            //verifica que un listado no se este reservado por mas de 28 dias
         } else if (DAYS.between(checkin, checkout) > 28L) {
             logger.warn("No se puede reservar un listado por más de 28 dias");
             throw new DomainInvalidRequestException("No se puede reservar un listado por más de 28 dias");

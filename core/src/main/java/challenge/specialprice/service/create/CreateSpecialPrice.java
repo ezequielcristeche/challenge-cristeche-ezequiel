@@ -6,7 +6,6 @@ import challenge.listing.domain.ListingId;
 import challenge.listing.service.get.GetListing;
 import challenge.specialprice.domain.SpecialPrice;
 import challenge.specialprice.repository.SpecialPriceRepository;
-import challenge.specialprice.service.get.GetSpecialPrice;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;

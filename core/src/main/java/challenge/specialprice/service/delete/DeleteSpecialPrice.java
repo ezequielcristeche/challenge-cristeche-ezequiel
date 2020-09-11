@@ -1,7 +1,6 @@
 package challenge.specialprice.service.delete;
 
 import challenge.commons.annotation.Service;
-import challenge.listing.domain.Listing;
 import challenge.listing.domain.ListingId;
 import challenge.listing.service.get.GetListing;
 import challenge.specialprice.domain.SpecialPrice;

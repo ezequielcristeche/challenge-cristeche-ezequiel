@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -67,12 +68,13 @@ public class ListingController {
     public ResponseEntity<ListingResponseDTO> createListing(@Valid @RequestBody ListingDTO listingDTO) {
         Listing listing = createListing.createListing(new UserId(listingDTO.getOwnerId()), listingDTO.getName(),
                 listingDTO.getName(), listingDTO.getDescription(), listingDTO.getAdults(), listingDTO.getChildren(),
-                listingDTO.getItPetsAllowed(), listingDTO.getBasePrice(), listingDTO.getCleaningFee(), listingDTO.getImageUrl(),
+                listingDTO.getIsPetsAllowed(), listingDTO.getBasePrice(), listingDTO.getCleaningFee(), listingDTO.getImageUrl(),
                 listingDTO.getWeeklyDiscount(), listingDTO.getMonthlyDiscount());
         ListingResponseDTO listingResponseDTO = new ListingResponseDTO(listing.getListingId().getId(),
                 listing.getOwnerId().getId(), listing.getName(), listing.getSlug(), listing.getDescription(),
                 listing.getAdults(), listing.getChildren(), listing.getIsPetsAllowed(), listing.getBasePrice(),
-                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount());
+                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount(),
+               null);
         return new ResponseEntity<>(listingResponseDTO, HttpStatus.CREATED);
     }
 
@@ -86,7 +88,9 @@ public class ListingController {
                 listing.getOwnerId().getId(), listing.getName(), listing.getSlug(), listing.getDescription(),
                 listing.getAdults(), listing.getChildren(), listing.getIsPetsAllowed(), listing.getBasePrice(),
                 listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(),
-                listing.getMonthlyDiscount())).collect(Collectors.toList());
+                listing.getMonthlyDiscount(), listing.getSpecialPriceList().stream().map(specialPrice -> new SpecialPriceResponseDTO(
+                specialPrice.getSpecialPriceId().getId(), specialPrice.getDate(), specialPrice.getPrice())).collect(Collectors.toList())))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/api/listings/{uuid}")
@@ -99,7 +103,9 @@ public class ListingController {
         ListingResponseDTO listingResponseDTO = new ListingResponseDTO(listing.getListingId().getId(),
                 listing.getOwnerId().getId(), listing.getName(), listing.getSlug(), listing.getDescription(),
                 listing.getAdults(), listing.getChildren(), listing.getIsPetsAllowed(), listing.getBasePrice(),
-                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount());
+                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount(),
+                listing.getSpecialPriceList().stream().map(specialPrice -> new SpecialPriceResponseDTO(
+                        specialPrice.getSpecialPriceId().getId(), specialPrice.getDate(), specialPrice.getPrice())).collect(Collectors.toList()));
         return new ResponseEntity<>(listingResponseDTO, HttpStatus.OK);
     }
 
@@ -113,12 +119,13 @@ public class ListingController {
                                                             @Valid @RequestBody ListingDTO listingDTO) {
         Listing listing = updateListing.updateListing(new ListingId(uuid), listingDTO.getName(),
                 listingDTO.getDescription(), listingDTO.getAdults(), listingDTO.getChildren(),
-                listingDTO.getItPetsAllowed(), listingDTO.getBasePrice(), listingDTO.getCleaningFee(), listingDTO.getImageUrl(),
+                listingDTO.getIsPetsAllowed(), listingDTO.getBasePrice(), listingDTO.getCleaningFee(), listingDTO.getImageUrl(),
                 listingDTO.getWeeklyDiscount(), listingDTO.getMonthlyDiscount());
         ListingResponseDTO listingResponseDTO = new ListingResponseDTO(listing.getListingId().getId(),
                 listing.getOwnerId().getId(), listing.getName(), listing.getSlug(), listing.getDescription(),
                 listing.getAdults(), listing.getChildren(), listing.getIsPetsAllowed(), listing.getBasePrice(),
-                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount());
+                listing.getCleaningFee(), listing.getImageUrl(), listing.getWeeklyDiscount(), listing.getMonthlyDiscount(),
+                null);
         return new ResponseEntity<>(listingResponseDTO, HttpStatus.OK);
     }
 
@@ -142,7 +149,7 @@ public class ListingController {
                                                                       @Valid @RequestBody SpecialPriceDTO specialPriceDTO) {
         SpecialPrice specialPrice = createSpecialPrice.createSpecialPrice(new ListingId(uuid), specialPriceDTO.getDate(),
                 specialPriceDTO.getPrice());
-        SpecialPriceResponseDTO specialPriceResponseDTO = new SpecialPriceResponseDTO(specialPrice.getListingId().getId(),
+        SpecialPriceResponseDTO specialPriceResponseDTO = new SpecialPriceResponseDTO(specialPrice.getSpecialPriceId().getId(),
                 specialPrice.getDate(), specialPrice.getPrice());
         return new ResponseEntity<>(specialPriceResponseDTO, HttpStatus.OK);
     }
@@ -166,9 +173,17 @@ public class ListingController {
     @ApiOperation(value = "Calcula el costo de una reserva a partir del checkin y checkout",
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalculatedReservationResponseDTO> calculateReservation(@PathVariable("uuid") String uuid,
-                                                                                 @Valid @RequestBody CalculateReservationDTO calculateReservationDTO) {
+                                                                                 @RequestParam
+                                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                         LocalDate dateSelected,
+                                                                                 @RequestParam
+                                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                         LocalDate checkin,
+                                                                                 @RequestParam
+                                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                         LocalDate checkout) {
         CalculatedReservationData calculatedReservationData = getListing.calculateReservationCost(new ListingId(uuid),
-                LocalDate.now(), calculateReservationDTO.getCheckin(), calculateReservationDTO.getCheckout());
+                dateSelected, checkin, checkout);
         CalculatedReservationResponseDTO calculatedReservationResponseDTO =
                 new CalculatedReservationResponseDTO(calculatedReservationData.getNightsCount(),
                         calculatedReservationData.getNightCost(), calculatedReservationData.getDiscount(),
