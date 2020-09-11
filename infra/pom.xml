@@ -10,10 +10,7 @@
     <artifactId>infra</artifactId>
     <name>infra</name>
     <description>Modulo Infra</description>
-
-
     <dependencies>
-
         <dependency>
             <groupId>com.challenge</groupId>
             <artifactId>core</artifactId>
@@ -33,16 +30,9 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

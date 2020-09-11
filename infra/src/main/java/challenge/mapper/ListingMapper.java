@@ -41,7 +41,7 @@ public class ListingMapper implements AbstractMapper<ListingEntity, Listing> {
                     entity.getSpecialPriceEntityList().stream().map(specialPriceEntity ->
                             new SpecialPrice(new SpecialPriceId(specialPriceEntity.getId().toString()),
                                     new ListingId(specialPriceEntity.getListingEntity().getId().toString()),
-                                    specialPriceEntity.getDate(), specialPriceEntity.getPrice())).collect(Collectors.toList()));
+                                    specialPriceEntity.getSpecialPriceDate(), specialPriceEntity.getPrice())).collect(Collectors.toList()));
         } else {
             return new Listing(new ListingId(entity.getId().toString()), new UserId(entity.getUserEntity().getId().toString()),
                     entity.getName(), entity.getSlug(), entity.getDescription(), entity.getAdults(), entity.getChildrens(),

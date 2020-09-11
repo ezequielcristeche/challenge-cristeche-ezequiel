@@ -33,8 +33,8 @@ public class SpecialPriceEntity {
     @JoinColumn(name = "listing_id", referencedColumnName = "id")
     private ListingEntity listingEntity;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP")
-    private LocalDate date;
+    @Column(name = "special_price_date", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDate specialPriceDate;
 
     @Column(nullable = false, columnDefinition = "DECIMAL(10,4)")
     private BigDecimal price;

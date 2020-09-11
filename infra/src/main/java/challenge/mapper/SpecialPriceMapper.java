@@ -22,7 +22,7 @@ public class SpecialPriceMapper implements AbstractMapper<SpecialPriceEntity, Sp
     @Override
     public SpecialPrice mapToDomain(SpecialPriceEntity entity) {
         return new SpecialPrice(new SpecialPriceId(entity.getId().toString()),
-                new ListingId(entity.getListingEntity().getId().toString()), entity.getDate(), entity.getPrice());
+                new ListingId(entity.getListingEntity().getId().toString()), entity.getSpecialPriceDate(), entity.getPrice());
     }
 
     @Override

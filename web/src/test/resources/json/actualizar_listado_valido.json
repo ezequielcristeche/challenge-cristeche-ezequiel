@@ -1,0 +1,12 @@
+{
+  "name": "Listado Actualizado",
+  "description":"Listado actualizado a traves del test",
+  "adults": 6,
+  "children":8,
+  "isPetsAllowed": false,
+  "basePrice": 195.62,
+  "cleaningFee": 95.82,
+  "imageUrl":"http://dummyimage.com/126x173.bmp/cc0000/ffffff",
+  "weeklyDiscount": 0,
+  "monthlyDiscount": 0.61
+}

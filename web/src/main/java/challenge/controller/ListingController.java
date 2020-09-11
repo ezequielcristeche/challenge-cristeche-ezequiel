@@ -151,15 +151,15 @@ public class ListingController {
                 specialPriceDTO.getPrice());
         SpecialPriceResponseDTO specialPriceResponseDTO = new SpecialPriceResponseDTO(specialPrice.getSpecialPriceId().getId(),
                 specialPrice.getDate(), specialPrice.getPrice());
-        return new ResponseEntity<>(specialPriceResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(specialPriceResponseDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/listings/{uuid}/special-prices/{idSpecialPrice}")
+    @DeleteMapping("/api/listings/{idListing}/special-prices/{idSpecialPrice}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Precio especial eliminado correctamente")
     })
     @ApiOperation(value = "Precio especial eliminado correctamente")
-    public ResponseEntity<String> deleteSpecialPrice(@PathVariable("uuid") String uuid,
+    public ResponseEntity<String> deleteSpecialPrice(@PathVariable("idListing") String uuid,
                                                      @PathVariable("idSpecialPrice") String idSpecialPrice) {
         String specialPrice = deleteSpecialPrice.deleteSpecialPriceById(new ListingId(uuid),
                 new SpecialPriceId(idSpecialPrice));
