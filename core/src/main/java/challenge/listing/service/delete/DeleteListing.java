@@ -36,7 +36,7 @@ public class DeleteListing {
         Listing listing = listingRepository.findById(listingId);
         if (Objects.isNull(listing)) {
             logger.warn("No existe un listado con id {}", listingId.getId());
-            throw new DomainNotFoundException(String.format("o existe un listado con id %s ", listingId.getId()));
+            throw new DomainNotFoundException(String.format("No existe un listado con id %s ", listingId.getId()));
         }
         listingRepository.deleteById(listingId);
         return listingId.getId();

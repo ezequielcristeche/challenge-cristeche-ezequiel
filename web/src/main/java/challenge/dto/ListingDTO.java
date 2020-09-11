@@ -26,7 +26,7 @@ public class ListingDTO {
 
     private Integer children;
 
-    private Boolean itPetsAllowed;
+    private Boolean isPetsAllowed;
 
     private BigDecimal basePrice;
 
