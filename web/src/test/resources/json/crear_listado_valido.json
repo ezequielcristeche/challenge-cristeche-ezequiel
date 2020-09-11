@@ -1,0 +1,15 @@
+{
+  "id": "d8fc6289-d2de-4331-bec2-d1ae86286a94",
+  "ownerId": "d701748f-6c54-4b01-90e6-d701748f0822",
+  "name": "Black Raven",
+  "slug": "Black Raven",
+  "description": "Morbi porttitor lorem id ligula. Suspendisse ornare conseque",
+  "adults": 3,
+  "children": 2,
+  "isPetsAllowed": true,
+  "basePrice": 195.62,
+  "cleaningFee": 95.82,
+  "imageUrl": "http://dummyimage.com/126x173.bmp/cc0000/ffffff",
+  "weeklyDiscount": 0.77,
+  "monthlyDiscount": 0.77
+}
