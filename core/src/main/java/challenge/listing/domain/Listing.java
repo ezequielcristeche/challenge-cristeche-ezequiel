@@ -1,10 +1,12 @@
 package challenge.listing.domain;
 
 import challenge.commons.util.ValidatorUtils;
+import challenge.specialprice.domain.SpecialPrice;
 import challenge.user.domain.UserId;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Domain que representativo de la tabla Listing
@@ -41,6 +43,9 @@ public class Listing {
 
     private BigDecimal monthlyDiscount;
 
+    private List<SpecialPrice> specialPriceList;
+
+
     public Listing(UserId ownerId, String name, String slug, String description, Integer adults,
                    Integer children, Boolean isPetsAllowed, BigDecimal basePrice, BigDecimal cleaningFee,
                    String imageUrl, BigDecimal weeklyDiscount, BigDecimal monthlyDiscount) {
@@ -74,7 +79,7 @@ public class Listing {
 
     public Listing(ListingId listingId, UserId ownerId, String name, String slug, String description, Integer adults,
                    Integer children, Boolean isPetsAllowed, BigDecimal basePrice, BigDecimal cleaningFee,
-                   String imageUrl, BigDecimal weeklyDiscount, BigDecimal monthlyDiscount) {
+                   String imageUrl, BigDecimal weeklyDiscount, BigDecimal monthlyDiscount, List<SpecialPrice> specialPriceList) {
         this.listingId = listingId;
         this.ownerId = ownerId;
         ValidatorUtils.validateAttribute(name, "el nombre no puede estar vacio", 60,
@@ -102,6 +107,7 @@ public class Listing {
         this.weeklyDiscount = weeklyDiscount;
         ValidatorUtils.validateNull(monthlyDiscount, "indicar el descuento mensual");
         this.monthlyDiscount = monthlyDiscount;
+        this.specialPriceList = specialPriceList;
     }
 
     public static Listing crear(UserId ownerId, String name, String slug, String description,
@@ -116,9 +122,9 @@ public class Listing {
     public static Listing actualizar(ListingId listingId, UserId ownerId, String name, String slug, String description,
                                      Integer adults, Integer children, Boolean isPetsAllowed, BigDecimal basePrice,
                                      BigDecimal cleaningFee, String imageUrl, BigDecimal weeklyDiscount,
-                                     BigDecimal monthlyDiscount) {
+                                     BigDecimal monthlyDiscount, List<SpecialPrice> specialPriceList) {
         return new Listing(listingId, ownerId, name, slug, description, adults,
                 children, isPetsAllowed, basePrice, cleaningFee,
-                imageUrl, weeklyDiscount, monthlyDiscount);
+                imageUrl, weeklyDiscount, monthlyDiscount, specialPriceList);
     }
 }

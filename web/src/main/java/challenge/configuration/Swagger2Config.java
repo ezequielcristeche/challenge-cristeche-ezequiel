@@ -29,17 +29,17 @@ public class Swagger2Config {
 	@Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.challenge"))
+                .apis(RequestHandlerSelectors.basePackage("challenge"))
                 .paths(PathSelectors.regex("/.*")).build().apiInfo(apiEndPointsInfo())
                 .securityContexts(Lists.newArrayList(securityContext()))
                 .securitySchemes(Lists.newArrayList(apiKey()))
-                .tags(new Tag("challenge", "CHALLENGE"))
+                .tags(new Tag("Listings", "Challenge - Ezequiel Cristeche"))
                 .globalResponseMessage(RequestMethod.GET, obtenerMensajesComunes())
                 .globalResponseMessage(RequestMethod.POST, obtenerMensajesComunes());
     }
 
     private List<ResponseMessage> obtenerMensajesComunes() {
-        List<ResponseMessage> responseMessage = new ArrayList<ResponseMessage>();
+        List<ResponseMessage> responseMessage = new ArrayList<>();
         responseMessage.add(new ResponseMessageBuilder().code(HttpStatus.BAD_REQUEST.value())
                 .message(MensajeHttpStatus.REQUEST_INCORRECTO).build());
         responseMessage.add(new ResponseMessageBuilder().code(HttpStatus.UNAUTHORIZED.value())

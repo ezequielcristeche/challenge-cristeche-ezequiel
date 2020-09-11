@@ -8,7 +8,7 @@ import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
 @ComponentScan(includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, 
-classes = Service.class), value = {"com.challenge"})
+classes = Service.class), value = {"challenge"})
 public class WebApplication {
 
 	public static void main(String[] args) {

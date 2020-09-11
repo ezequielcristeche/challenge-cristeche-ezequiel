@@ -50,7 +50,7 @@ public class UpdateListing {
         Listing listing = getListing.getListing(listingId);
         return listingRepository.update(Listing.actualizar(listingId, listing.getOwnerId(), name,
                 listing.getSlug(), description, adults, children, isPetsAllowed, basePrice, cleaningFee, imageUrl,
-                weeklyDiscount, monthlyDiscount));
+                weeklyDiscount, monthlyDiscount, listing.getSpecialPriceList()));
     }
 
 }

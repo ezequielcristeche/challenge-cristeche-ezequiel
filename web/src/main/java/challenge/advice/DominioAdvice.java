@@ -2,10 +2,10 @@ package challenge.advice;
 
 import challenge.advice.error.ApiError;
 import challenge.advice.error.ApiFieldError;
+import challenge.commons.exception.DomainDuplicatedException;
+import challenge.commons.exception.DomainInvalidRequestException;
+import challenge.commons.exception.DomainNotFoundException;
 import challenge.constants.MensajeHttpStatus;
-import com.ma.grossingup.commons.exception.DomainDuplicatedException;
-import com.ma.grossingup.commons.exception.DomainInvalidRequestException;
-import com.ma.grossingup.commons.exception.DomainNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
